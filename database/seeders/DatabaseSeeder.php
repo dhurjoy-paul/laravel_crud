@@ -26,6 +26,12 @@ class DatabaseSeeder extends Seeder
         //     ]
         // );
 
+        // from yt
+        // User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com'
+        // ]);
+
         $categories = [
             'Technology',
             'Health',
