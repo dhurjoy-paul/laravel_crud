@@ -10,10 +10,10 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard } from '@/routes';
+import { dashboard, posts } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-react';
+import { BookOpen, BookOpenText, Folder, LayoutGrid } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -22,13 +22,11 @@ const mainNavItems: NavItem[] = [
         href: dashboard(),
         icon: LayoutGrid,
     },
-    // {
-    //     title: 'Posts',
-    //     href: {
-    //         'get', '/posts'
-    //     },
-    //     icon: BookOpenText,
-    // },
+    {
+        title: 'Posts',
+        href: posts(),
+        icon: BookOpenText,
+    },
 ];
 
 const footerNavItems: NavItem[] = [

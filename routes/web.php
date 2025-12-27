@@ -22,18 +22,16 @@ Route::get('/contact', function () {
     ]);
 });
 
+
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', [PostController::class, 'index'])->name('dashboard');
-});
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('posts', [PostController::class, 'index'])->name('posts');
+    Route::get('/dashboard', function () {
+        return Inertia::render('dashboard');
+    })->name('dashboard');
+    // Route::get('dashboard', [PostController::class, 'index'])->name('dashboard');
 });
 
-
-// Route::middleware(['auth', 'verified'])->group(function () {
-//     Route::get('dashboard', function () {
-//         return Inertia::render('dashboard');
-//     })->name('dashboard');
-// });
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/posts', [PostController::class, 'index'])->name('posts');
+});
 
 require __DIR__ . '/settings.php';

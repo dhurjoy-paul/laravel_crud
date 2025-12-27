@@ -19,7 +19,7 @@ class PostController extends Controller
         // $posts = Post::get();
         // dd($posts);     // dump and die
 
-        return Inertia::render('dashboard', [
+        return Inertia::render('posts', [
             'categories' => $categories,
             'posts' => $posts,
         ]);
