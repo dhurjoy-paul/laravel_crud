@@ -11,6 +11,21 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
+Route::middleware(['auth', 'verified'])->group(function () {
+    // dashboard
+    Route::get('/dashboard', function () {
+        return Inertia::render('dashboard');
+    })->name('dashboard');
+
+    // posts GET
+    Route::get('/posts', [PostController::class, 'index'])->name('posts');
+
+    // create post
+    Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
+
+    Route::post('/post/create', [PostController::class, 'store'])->name('post.store');
+});
+
 Route::get('/hello', function () {
     return "hello World!";
 });
@@ -20,18 +35,6 @@ Route::get('/contact', function () {
         'greetings' => "Hello World!",
         'name' => 'Dhurjoy Paul'
     ]);
-});
-
-
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('dashboard');
-    })->name('dashboard');
-    // Route::get('dashboard', [PostController::class, 'index'])->name('dashboard');
-});
-
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/posts', [PostController::class, 'index'])->name('posts');
 });
 
 require __DIR__ . '/settings.php';

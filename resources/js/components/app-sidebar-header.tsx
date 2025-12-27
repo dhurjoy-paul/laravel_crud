@@ -1,6 +1,8 @@
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { SidebarTrigger } from '@/components/ui/sidebar';
+import post from '@/routes/post';
 import { type BreadcrumbItem as BreadcrumbItemType } from '@/types';
+import { Link } from '@inertiajs/react';
 
 export function AppSidebarHeader({
     breadcrumbs = [],
@@ -15,12 +17,13 @@ export function AppSidebarHeader({
                 <SidebarTrigger className="-ml-1" />
                 <Breadcrumbs breadcrumbs={breadcrumbs} />
                 {create_post && (
-                    <button
+                    <Link
+                        href={post.create().url}
                         type="button"
-                        className="border-default-medium text-body focus:outline-pointer-none: ml-auto box-border inline-flex w-auto items-center rounded-md border bg-primary px-2 py-1.5 text-sm leading-5 font-semibold text-primary-foreground shadow-xs transition-all duration-200 hover:bg-primary-foreground hover:text-primary"
+                        className="border-default-medium text-body focus:outline-pointer-none: ml-auto box-border inline-flex w-auto cursor-pointer items-center rounded-md border bg-primary px-2 py-1.5 text-sm leading-5 font-semibold text-primary-foreground shadow-xs transition-all duration-200 hover:bg-primary-foreground hover:text-primary"
                     >
                         Create post
-                    </button>
+                    </Link>
                 )}
             </div>
         </header>

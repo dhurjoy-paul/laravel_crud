@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class PostController extends Controller
@@ -16,13 +18,12 @@ class PostController extends Controller
     {
         $categories = Category::get();
         $posts = Post::orderBy('created_at', 'DESC')->paginate(6);
-        // $posts = Post::get();
-        // dd($posts);     // dump and die
-
         return Inertia::render('posts', [
             'categories' => $categories,
             'posts' => $posts,
         ]);
+        // $posts = Post::get();
+        // dd($posts);     // dump and die
 
         // will not work because i am using inertia
         // return view('dashboard');
@@ -33,7 +34,10 @@ class PostController extends Controller
      */
     public function create()
     {
-        return Inertia::render('post.create');
+        $categories = Category::get();
+        return Inertia::render('post/create', [
+            'categories' => $categories,
+        ]);
     }
 
     /**
@@ -41,7 +45,25 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'title' => 'required',
+            'content' => 'required',
+            'image' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg|max:2048'],
+            'category_id' => ['required', 'exists:categories,id'],
+            'published_at' => ['nullable', 'date']
+        ]);
+
+        $image = $data['image'];
+        unset($data['image']);
+        $imagePath = $image->store('posts', 'public');
+
+        $data['image'] = $imagePath;
+        $data['user_id'] = Auth::id();
+        $data['slug'] = Str::slug($data['title']);
+
+        Post::create($data);
+
+        return redirect()->route('posts');
     }
 
     /**

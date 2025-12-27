@@ -13,12 +13,14 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 interface Post {
     id: number;
+    slug: string;
+
     image: string;
     title: string;
-    slug: string;
     content: string;
     category_id: number;
     user_id: number;
+
     published_at: string;
 }
 
@@ -75,7 +77,7 @@ export default function Posts({ categories, posts }: Props) {
                 </div> */}
 
                 {/* posts */}
-                <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+                <div className="grid auto-rows-min gap-4 md:grid-cols-2">
                     {postItems.map((post) =>
                         post ? (
                             <Link
@@ -96,7 +98,7 @@ export default function Posts({ categories, posts }: Props) {
                                     <div>
                                         <button
                                             type="button"
-                                            className="border-default-medium text-body box-border inline-flex w-auto items-center rounded-md border bg-primary px-4 py-2.5 text-sm leading-5 font-medium text-primary-foreground shadow-xs transition-all duration-200 hover:bg-primary-foreground hover:text-primary focus:outline-none"
+                                            className="border-default-medium text-body box-border inline-flex w-auto cursor-pointer items-center rounded-md border bg-primary px-4 py-2.5 text-sm leading-5 font-medium text-primary-foreground shadow-xs transition-all duration-200 hover:bg-primary-foreground hover:text-primary focus:outline-none"
                                         >
                                             Read more
                                         </button>
