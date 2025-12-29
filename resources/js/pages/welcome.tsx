@@ -1,6 +1,7 @@
 import Container from '@/components/custom/container';
 import Pagination from '@/components/custom/Pagination';
-import PostsContent from '@/components/custom/postscontent';
+import PostsContent from '@/components/custom/postsContent';
+import Search from '@/components/custom/search';
 import { dashboard, login, register } from '@/routes';
 import { Category, PaginatedData, Post, type SharedData } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';
@@ -9,10 +10,12 @@ export default function Welcome({
     canRegister = true,
     categories,
     posts,
+    filters,
 }: {
     canRegister?: boolean;
     categories: Category[];
     posts: PaginatedData<Post>;
+    filters?: any;
 }) {
     const { auth } = usePage<SharedData>().props;
     const postItems = posts.data;
@@ -26,13 +29,13 @@ export default function Welcome({
                     rel="stylesheet"
                 />
             </Head>
-            <div className="flex flex-col items-center bg-[#FDFDFC] dark:bg-[#0a0a0a] p-6 lg:p-8 min-h-screen text-[#1b1b18]">
-                <header className="not-has-[nav]:hidden mb-6 w-full max-w-[335px] lg:max-w-4xl text-sm">
-                    <nav className="flex justify-end items-center gap-4">
+            <div className="flex min-h-screen flex-col items-center bg-[#FDFDFC] p-6 text-[#1b1b18] lg:p-8 dark:bg-[#0a0a0a]">
+                <header className="mb-6 w-full max-w-[335px] text-sm not-has-[nav]:hidden lg:max-w-4xl">
+                    <nav className="flex items-center justify-end gap-4">
                         {auth.user ? (
                             <Link
                                 href={dashboard()}
-                                className="inline-block px-5 py-1.5 border border-[#19140035] hover:border-[#1915014a] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-sm text-[#1b1b18] dark:text-[#EDEDEC] text-sm leading-normal"
+                                className="inline-block rounded-sm border border-[#19140035] px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#1915014a] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b]"
                             >
                                 Dashboard
                             </Link>
@@ -40,14 +43,14 @@ export default function Welcome({
                             <>
                                 <Link
                                     href={login()}
-                                    className="inline-block px-5 py-1.5 border border-transparent hover:border-[#19140035] dark:hover:border-[#3E3E3A] rounded-sm text-[#1b1b18] dark:text-[#EDEDEC] text-sm leading-normal"
+                                    className="inline-block rounded-sm border border-transparent px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#19140035] dark:text-[#EDEDEC] dark:hover:border-[#3E3E3A]"
                                 >
                                     Log in
                                 </Link>
                                 {canRegister && (
                                     <Link
                                         href={register()}
-                                        className="inline-block px-5 py-1.5 border border-[#19140035] hover:border-[#1915014a] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-sm text-[#1b1b18] dark:text-[#EDEDEC] text-sm leading-normal"
+                                        className="inline-block rounded-sm border border-[#19140035] px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#1915014a] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b]"
                                     >
                                         Register
                                     </Link>
@@ -57,7 +60,10 @@ export default function Welcome({
                     </nav>
                 </header>
                 <Container>
-                    <PostsContent posts={posts} />
+                    <div className="mb-4 flex w-full items-center justify-between">
+                        <Search search={filters.search} />
+                    </div>
+                    <PostsContent posts={posts} grid={1} />
 
                     <Pagination links={posts.links} />
                 </Container>

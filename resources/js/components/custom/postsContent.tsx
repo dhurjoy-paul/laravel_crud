@@ -12,40 +12,40 @@ export default function PostsContent({
 }) {
     return (
         <div
-            className={`grid gap-6 ${grid ? `md:grid-cols-${grid}` : 'grid-cols-1'}`}
+            className={`grid grid-cols-1 gap-6 ${grid ? `md:grid-cols-${grid}` : 'grid-cols-1'}`}
         >
             {posts?.data.length > 0 ? (
                 posts.data.map((post) => (
                     <div
                         key={post.id}
-                        className="group relative flex md:flex-row flex-col bg-card shadow-sm hover:shadow-md border rounded-xl overflow-hidden text-card-foreground transition-all"
+                        className="group relative flex flex-col overflow-hidden rounded-xl border bg-card text-card-foreground shadow-sm transition-all hover:shadow-md md:flex-row"
                     >
                         {/* Image Section */}
-                        <div className="w-full md:w-72 h-48 md:h-auto overflow-hidden">
+                        <div className="h-48 w-full overflow-hidden md:h-auto md:w-72">
                             <img
                                 src={`/storage/${post.image}`}
                                 alt={post.title}
-                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                             />
                         </div>
 
                         {/* Content Section */}
-                        <div className="flex flex-col flex-1 p-5">
+                        <div className="flex flex-1 flex-col p-5">
                             <div className="flex-1">
                                 <Link href={post.slug}>
-                                    <h3 className="mb-2 font-semibold text-xl decoration-primary hover:underline underline-offset-4 tracking-tight">
+                                    <h3 className="mb-2 text-xl font-semibold tracking-tight decoration-primary underline-offset-4 hover:underline">
                                         {post.title}
                                     </h3>
                                 </Link>
-                                <p className="mb-4 text-muted-foreground text-sm line-clamp-2">
+                                <p className="mb-4 line-clamp-2 text-sm text-muted-foreground">
                                     {post.content}
                                 </p>
                             </div>
 
-                            <div className="flex justify-between items-center mt-auto pt-4 border-border/50 border-t">
+                            <div className="mt-auto flex items-center justify-between border-t border-border/50 pt-4">
                                 <Link
                                     href={post.slug}
-                                    className="font-medium text-primary text-sm hover:underline"
+                                    className="text-sm font-medium text-primary hover:underline"
                                 >
                                     Read more ➺
                                 </Link>
@@ -54,13 +54,13 @@ export default function PostsContent({
                                     <div className="flex items-center gap-2">
                                         <Link
                                             // href={route('post.edit', post.id)}
-                                            className="inline-flex justify-center items-center bg-secondary hover:bg-secondary/80 px-3 py-1.5 border rounded-md font-medium text-secondary-foreground text-xs transition-colors"
+                                            className="inline-flex items-center justify-center rounded-md border bg-secondary px-3 py-1.5 text-xs font-medium text-secondary-foreground transition-colors hover:bg-secondary/80"
                                         >
                                             Edit
                                         </Link>
                                         <button
                                             type="button"
-                                            className="inline-flex justify-center items-center bg-destructive/10 hover:bg-destructive px-3 py-1.5 rounded-md font-medium text-destructive-foreground hover:text-destructive-foreground text-xs transition-all"
+                                            className="inline-flex items-center justify-center rounded-md bg-destructive/10 px-3 py-1.5 text-xs font-medium text-destructive-foreground transition-all hover:bg-destructive hover:text-destructive-foreground"
                                         >
                                             Delete
                                         </button>
@@ -71,7 +71,7 @@ export default function PostsContent({
                     </div>
                 ))
             ) : (
-                <div className="py-20 border-2 border-dashed rounded-xl text-center">
+                <div className="rounded-xl border-2 border-dashed py-20 text-center">
                     <p className="font-medium text-muted-foreground">
                         No posts found.
                     </p>

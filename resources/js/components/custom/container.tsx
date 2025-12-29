@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Container({ children }: { children: React.ReactNode }) {
     return (
-        <div className="bg-background mx-auto px-2 sm:px-0 max-w-6xl text-foreground">
+        <div className="mx-auto w-full max-w-6xl bg-background px-2 text-foreground sm:px-0">
             {children}
         </div>
     );

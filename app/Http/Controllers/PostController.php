@@ -15,26 +15,43 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Common data
-        $data = [
-            'categories' => Category::all(),
-            'posts' => Post::latest()->paginate(6),
-        ];
+        $posts = Post::where('user_id', Auth::id())
+            ->when($request->input('search'), function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('title', 'like', "%{$search}%")
+                        ->orWhere('content', 'like', "%{$search}%");
+                });
+            })
+            ->latest()
+            ->paginate(6)
+            ->withQueryString();
 
-        return Inertia::render('posts', $data);
+        return Inertia::render('posts', [
+            'categories' => Category::all(),
+            'posts' => $posts,
+            'filters' => $request->only(['search']),
+        ]);
     }
 
-    public function welcome()
+    public function welcome(Request $request)
     {
-        $data = [
-            'categories' => Category::all(),
-            'posts' => Post::latest()->paginate(6),
-            'canRegister' => Features::enabled(Features::registration()),
-        ];
+        $posts = Post::query()
+            ->when($request->input('search'), function ($query, $search) {
+                $query->where('title', 'like', "%{$search}%")
+                    ->orWhere('content', 'like', "%{$search}%");
+            })
+            ->latest()
+            ->paginate(6)
+            ->withQueryString();
 
-        return Inertia::render('welcome', $data);
+        return Inertia::render('welcome', [
+            'categories' => Category::all(),
+            'posts' => $posts,
+            'filters' => $request->only(['search']),
+            'canRegister' => Features::enabled(Features::registration()),
+        ]);
     }
     // public function index()
     // {
