@@ -19,7 +19,7 @@ export default function Search({ filters }: { filters: any }) {
     }, [value]);
 
     return (
-        <div className="mb-6 w-full sm:max-w-sm">
+        <div className="w-full">
             <Input
                 type="text"
                 placeholder={
@@ -29,7 +29,7 @@ export default function Search({ filters }: { filters: any }) {
                 }
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
-                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary"
+                className="w-full rounded-md border border-input bg-input/30 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary"
             />
         </div>
     );

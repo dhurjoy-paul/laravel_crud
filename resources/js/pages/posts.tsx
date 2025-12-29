@@ -23,19 +23,17 @@ export default function Posts({
     posts: PaginatedData<Post>;
     filters?: any;
 }) {
-    const postItems = posts.data;
     return (
         <AppLayout breadcrumbs={breadcrumbs} create_post={true}>
             <Head title="Posts" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
                 {/* tabs */}
-                <CategoryFilter
-                    categories={categories}
-                    filters={filters}
-                    currentCategory={filters?.category}
-                />
-
-                <div className="mb-4 flex w-full items-center justify-between">
+                <div className="mx-auto mb-4 w-full max-w-fit">
+                    <CategoryFilter
+                        categories={categories}
+                        filters={filters}
+                        currentCategory={filters?.category}
+                    />
                     <Search filters={filters} />
                 </div>
 
