@@ -24,6 +24,9 @@ class PostController extends Controller
                         ->orWhere('content', 'like', "%{$search}%");
                 });
             })
+            ->when($request->input('category'), function ($query, $categoryId) {
+                $query->where('category_id', $categoryId);
+            })
             ->latest()
             ->paginate(6)
             ->withQueryString();
@@ -31,7 +34,7 @@ class PostController extends Controller
         return Inertia::render('posts', [
             'categories' => Category::all(),
             'posts' => $posts,
-            'filters' => $request->only(['search']),
+            'filters' => $request->only(['search', 'category']),
         ]);
     }
 
@@ -39,8 +42,13 @@ class PostController extends Controller
     {
         $posts = Post::query()
             ->when($request->input('search'), function ($query, $search) {
-                $query->where('title', 'like', "%{$search}%")
-                    ->orWhere('content', 'like', "%{$search}%");
+                $query->where(function ($q) use ($search) {
+                    $q->where('title', 'like', "%{$search}%")
+                        ->orWhere('content', 'like', "%{$search}%");
+                });
+            })
+            ->when($request->input('category'), function ($query, $categoryId) {
+                $query->where('category_id', $categoryId);
             })
             ->latest()
             ->paginate(6)
@@ -49,10 +57,11 @@ class PostController extends Controller
         return Inertia::render('welcome', [
             'categories' => Category::all(),
             'posts' => $posts,
-            'filters' => $request->only(['search']),
+            'filters' => $request->only(['search', 'category']),
             'canRegister' => Features::enabled(Features::registration()),
         ]);
     }
+    
     // public function index()
     // {
     //     $categories = Category::get();

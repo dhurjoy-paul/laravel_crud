@@ -2,14 +2,15 @@ import { router } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import { Input } from '../ui/input';
 
-export default function Search({ search }: { search?: string }) {
-    const [value, setValue] = useState(search || '');
+export default function Search({ filters }: { filters: any }) {
+    const searchedText = filters.search;
+    const [value, setValue] = useState(searchedText || '');
 
     useEffect(() => {
         const searchDelayFn = setTimeout(() => {
             router.get(
                 window.location.pathname,
-                { search: value },
+                { ...filters, search: value, page: 1 },
                 { preserveState: true, replace: true },
             );
         }, 300);
@@ -21,7 +22,11 @@ export default function Search({ search }: { search?: string }) {
         <div className="mb-6 w-full sm:max-w-sm">
             <Input
                 type="text"
-                placeholder="Search your posts..."
+                placeholder={
+                    filters.category
+                        ? 'Search in this category...'
+                        : 'Search all posts...'
+                }
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
                 className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary"

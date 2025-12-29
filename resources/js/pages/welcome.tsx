@@ -1,3 +1,4 @@
+import CategoryFilter from '@/components/custom/categoryFilter';
 import Container from '@/components/custom/container';
 import Pagination from '@/components/custom/Pagination';
 import PostsContent from '@/components/custom/postsContent';
@@ -60,8 +61,13 @@ export default function Welcome({
                     </nav>
                 </header>
                 <Container>
+                    <CategoryFilter
+                        categories={categories}
+                        filters={filters}
+                        currentCategory={filters?.category}
+                    />
                     <div className="mb-4 flex w-full items-center justify-between">
-                        <Search search={filters.search} />
+                        <Search filters={filters} />
                     </div>
                     <PostsContent posts={posts} grid={1} />
 
